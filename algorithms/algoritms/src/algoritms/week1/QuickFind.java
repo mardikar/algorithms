@@ -2,13 +2,13 @@ package algoritms.week1;
 
 public class QuickFind implements UnionFindInterface {
 	
-	private int N;
-	private int[] ids;
+	protected int N;
+	protected int[] ids;
 
 	public QuickFind(int N) {
-		this.N = N;
-		this.ids = new int[N+1];
-		for(int i=1; i <= N; i++) {
+		this.N = N+1;
+		this.ids = new int[N];
+		for(int i=0; i < N; i++) {
 			this.ids[i] = i;
 		}
 	}
@@ -21,7 +21,7 @@ public class QuickFind implements UnionFindInterface {
 		int pid = ids[p];
 		int qid = ids[q];
 		
-		for(int i=1; i <= N; i++) {
+		for(int i=0; i < N; i++) {
 			if(ids[i] == pid)
 				ids[i] = qid;
 		}

@@ -7,7 +7,9 @@ public class Tester {
 		int n = 10;
 		
 //		QuickUnion test = new QuickUnion(n);
-		QuickFind test = new QuickFind(n);
+//		QuickFind test = new QuickFind(n);
+		
+		WeightedQuickUnion test = new WeightedQuickUnion(n);
 		
 		test.union(1, 2);
 		test.union(1, 2);

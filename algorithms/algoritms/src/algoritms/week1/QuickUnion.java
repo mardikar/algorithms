@@ -2,18 +2,18 @@ package algoritms.week1;
 
 public class QuickUnion implements UnionFindInterface {
 	
-	private int N;
-	private int[] ids;
+	protected int N;
+	protected int[] ids;
 	
 	public QuickUnion(int n) {
-		N = n;
-		ids = new int[N+1];
-		for(int i=1;i <= N; i++) {
+		N = n+1;
+		ids = new int[N];
+		for(int i=0;i < N; i++) {
 			ids[i] = i;
 		}
 	}
 	
-	private int root(int p) {
+	protected int root(int p) {
 		while(ids[p] != p) {
 			p = ids[p];
 		}

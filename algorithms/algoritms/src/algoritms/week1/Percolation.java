@@ -96,7 +96,5 @@ public class Percolation {
 	public boolean percolates() {
 		return unionFind.find(VIRTUAL_TOP) == unionFind.find(VIRTUAL_BOTTOM);
 	}
-	
-	
 
 }

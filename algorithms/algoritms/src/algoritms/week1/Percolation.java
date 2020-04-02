@@ -19,6 +19,10 @@ public class Percolation {
 		unionFind = new WeightedQuickUnionUF(this.n * this.n);
 		grid = new boolean[this.n][this.n];
 		openSitesCount = 0;
+		for(int j=1;j<n;j++) {
+			unionFind.union(ufNodeId(1, j), VIRTUAL_TOP);
+			unionFind.union(ufNodeId(n-1, j), VIRTUAL_BOTTOM);
+		}
 	}
 
 	private void validateArguments(int row, int col) {
@@ -40,12 +44,6 @@ public class Percolation {
 		int p = ufNodeId(row, col);
 		int q = ufNodeId(row1, col1);
 		unionFind.union(p, q);
-		if (row1 == 1) {
-			unionFind.union(q, VIRTUAL_TOP);
-		}
-		if (row1 == this.n - 1) {
-			unionFind.union(q, VIRTUAL_BOTTOM);
-		}
 	}
 
 	private int ufNodeId(int row, int col) {
@@ -58,13 +56,6 @@ public class Percolation {
 			return;
 		}
 		grid[row][col] = true;
-		int nodeId = ufNodeId(row, col);
-		if (row == 1) {
-			unionFind.union(nodeId, VIRTUAL_TOP);
-		}
-		if (row == this.n - 1) {
-			unionFind.union(nodeId, VIRTUAL_BOTTOM);
-		}
 		openSitesCount += 1;
 		if (isValidOpen(row, col - 1)) {
 			union(row, col, row, col - 1);

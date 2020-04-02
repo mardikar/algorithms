@@ -33,3 +33,12 @@ public class PercolationTester {
 	}
 
 }
+
+
+final class FutureHelper{
+	
+	public void function(int a) {
+		
+	}
+	
+}

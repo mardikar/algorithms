@@ -6,6 +6,7 @@ public class Tester {
 		
 		int n = 10;
 		
+		
 //		QuickUnion test = new QuickUnion(n);
 //		QuickFind test = new QuickFind(n);
 		

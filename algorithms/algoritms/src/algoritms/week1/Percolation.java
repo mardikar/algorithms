@@ -10,24 +10,19 @@ public class Percolation {
 	private int openSitesCount;
 	private boolean[][] grid;
 	private final WeightedQuickUnionUF unionFind;
+	private final IllegalArgumentException illegalArgumentException = new IllegalArgumentException(
+			"Row/Column index should be between 1 to N.");
 
 	public Percolation(int n) {
-		if (n <= 0) {
-			throw new IllegalArgumentException("N must be a non-zero positive integer.");
-		}
+		if (n <= 0)
+			throw illegalArgumentException;
 		this.n = n + 1;
 		unionFind = new WeightedQuickUnionUF(this.n * this.n);
 		grid = new boolean[this.n][this.n];
 		openSitesCount = 0;
-		for(int j=1;j<n;j++) {
-			unionFind.union(ufNodeId(1, j), VIRTUAL_TOP);
-			unionFind.union(ufNodeId(n-1, j), VIRTUAL_BOTTOM);
-		}
 	}
 
 	private void validateArguments(int row, int col) {
-		IllegalArgumentException illegalArgumentException = new IllegalArgumentException(
-				"Row/Column index should be between 1 to N.");
 		if (!isValid(row, col))
 			throw illegalArgumentException;
 	}
@@ -41,9 +36,16 @@ public class Percolation {
 	}
 
 	private void union(int row, int col, int row1, int col1) {
-		int p = ufNodeId(row, col);
-		int q = ufNodeId(row1, col1);
-		unionFind.union(p, q);
+		if (isValidOpen(row1, col1)) {
+			int q = ufNodeId(row1, col1);
+			unionFind.union(ufNodeId(row, col), q);
+			if (row1 == 1) {
+				unionFind.union(q, VIRTUAL_TOP);
+			}
+			if (row1 == n - 1) {
+				unionFind.union(q, VIRTUAL_BOTTOM);
+			}
+		}
 	}
 
 	private int ufNodeId(int row, int col) {
@@ -52,23 +54,21 @@ public class Percolation {
 
 	public void open(int row, int col) {
 		validateArguments(row, col);
-		if(grid[row][col]) {
+		if (grid[row][col]) {
 			return;
 		}
 		grid[row][col] = true;
 		openSitesCount += 1;
-		if (isValidOpen(row, col - 1)) {
-			union(row, col, row, col - 1);
+		if (row == 1) {
+			unionFind.union(ufNodeId(row, col), VIRTUAL_TOP);
 		}
-		if (isValidOpen(row, col + 1)) {
-			union(row, col, row, col + 1);
+		if (row == n - 1) {
+			unionFind.union(ufNodeId(row, col), VIRTUAL_BOTTOM);
 		}
-		if (isValidOpen(row + 1, col)) {
-			union(row, col, row + 1, col);
-		}
-		if (isValidOpen(row - 1, col)) {
-			union(row, col, row - 1, col);
-		}
+		union(row, col, row, col - 1);
+		union(row, col, row, col + 1);
+		union(row, col, row + 1, col);
+		union(row, col, row - 1, col);
 	}
 
 	public boolean isOpen(int row, int col) {
@@ -77,7 +77,18 @@ public class Percolation {
 	}
 
 	public boolean isFull(int row, int col) {
-		return isOpen(row, col) && unionFind.find(ufNodeId(row, col)) == unionFind.find(VIRTUAL_TOP);
+		if (isOpen(row, col)) {
+			int p = unionFind.find(ufNodeId(row, col));
+			if (row == n - 1) {
+				for (int i = 1; i < n; i++) {
+					if (grid[1][i] && p == unionFind.find(ufNodeId(1, i)))
+						return true;
+				}
+			} else {
+				return p == unionFind.find(VIRTUAL_TOP);
+			}
+		}
+		return false;
 	}
 
 	public int numberOfOpenSites() {

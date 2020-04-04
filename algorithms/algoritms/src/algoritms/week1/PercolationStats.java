@@ -33,8 +33,8 @@ public class PercolationStats {
 		}
 		StdRandom.shuffle(sites);
 		for (int i = 0; i < count; i++) {
-			int row = sites[i] / (this.n+1);
-			int col = sites[i] % (this.n+1);
+			int row = sites[i] / (this.n + 1);
+			int col = sites[i] % (this.n + 1);
 			percolation.open(row, col);
 			if (percolation.percolates()) {
 				return (i * 1.0) / count;
@@ -60,7 +60,7 @@ public class PercolationStats {
 	}
 
 	public static void main(String[] args) {
-		args = new String[] {"200", "100"};
+		args = new String[] { "200", "100" };
 		int n = Integer.parseInt(args[0]), trials = Integer.parseInt(args[1]);
 		PercolationStats percolationStats = new PercolationStats(n, trials);
 		System.out.println("mean = " + percolationStats.mean());

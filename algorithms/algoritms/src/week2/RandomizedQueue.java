@@ -12,12 +12,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	private final NoSuchElementException noSuchElementException = new NoSuchElementException();
 	private final IllegalArgumentException illegalArgumentException = new IllegalArgumentException();
 
-	@SuppressWarnings("unchecked")
 	public RandomizedQueue() {
 		queue = (Item[]) new Object[capacity];
 	}
 
-	@SuppressWarnings("unchecked")
 	private void resize(int newCapacity) {
 		capacity = newCapacity;
 		Item[] newQueue = (Item[]) new Object[capacity];

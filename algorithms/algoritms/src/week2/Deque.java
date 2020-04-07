@@ -42,7 +42,8 @@ public class Deque<Item> implements Iterable<Item> {
 	public void addFirst(Item item) {
 		validateInput(item);
 		if (isEmpty()) {
-			first = last = new Node(item);
+			first = new Node(item);
+			last = first;
 		} else {
 			Node oldFirst = first;
 			first = new Node(item);
@@ -54,7 +55,8 @@ public class Deque<Item> implements Iterable<Item> {
 	public void addLast(Item item) {
 		validateInput(item);
 		if (isEmpty()) {
-			first = last = new Node(item);
+			first = new Node(item);
+			last = first;
 		} else {
 			Node oldLast = last;
 			last = new Node(item);
@@ -116,15 +118,15 @@ public class Deque<Item> implements Iterable<Item> {
 		}
 
 	}
-	
+
 	private void printDeque() {
-		for(Item s:this) {
+		for (Item s : this) {
 			System.out.println(s);
 		}
 	}
 
 	public static void main(String[] args) {
-		
+
 		Deque<String> deque = new Deque<String>();
 		deque.addFirst("Saurabh");
 		deque.printDeque();
@@ -136,7 +138,7 @@ public class Deque<Item> implements Iterable<Item> {
 		deque.printDeque();
 		System.out.println(deque.removeLast());
 		deque.printDeque();
-		
+
 	}
 
 }

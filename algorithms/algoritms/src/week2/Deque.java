@@ -101,7 +101,7 @@ public class Deque<Item> implements Iterable<Item> {
         private final UnsupportedOperationException unsupportedOperationException = new UnsupportedOperationException();
 
         public boolean hasNext() {
-            return current.next != null;
+            return current != null;
         }
 
         public Item next() {

@@ -82,11 +82,16 @@ public class Deque<Item> implements Iterable<Item> {
     public Item removeLast() {
         validateRemove();
         Item item = last.item;
-        Node pointer = first;
-        while (pointer.next != null && pointer.next != last)
-            pointer = pointer.next;
-        last = pointer;
-        last.next = null;
+        if (first == last) {
+            first = null;
+            last = null;
+        } else {
+            Node pointer = first;
+            while (pointer.next != null && pointer.next != last)
+                pointer = pointer.next;
+            last = pointer;
+            last.next = null;
+        }
         length--;
         return item;
     }
@@ -128,17 +133,23 @@ public class Deque<Item> implements Iterable<Item> {
     public static void main(String[] args) {
 
         Deque<String> deque = new Deque<String>();
-        deque.addFirst("Saurabh");
-        deque.printDeque();
-        deque.removeLast();
-        deque.addFirst("Sukanya");
-        deque.printDeque();
-        deque.addLast("Mardikar");
+        deque.addLast("Saurabh");
         deque.printDeque();
         deque.removeFirst();
         deque.printDeque();
-        System.out.println(deque.removeLast());
+        deque.addLast("42");
         deque.printDeque();
+        deque.removeLast();
+        deque.printDeque();
+
+//        deque.addFirst("Sukanya");
+//        deque.printDeque();
+//        deque.addLast("Mardikar");
+//        deque.printDeque();
+//        deque.removeFirst();
+//        deque.printDeque();
+//        System.out.println(deque.removeLast());
+//        deque.printDeque();
 
     }
 
